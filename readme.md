@@ -43,4 +43,15 @@
 	JOIN Orders ON Customers.cust_id=orders.cust_id
 	 group by Customers.cust_name having count(orders.order_qty) = (select max(total_order) from (select cust_id, count(*)
 	 as total_order from task1.orders group by cust_id)as temp);
+#### Get the customers who have ordered least quantity
+	SELECT Customers.cust_name, min(orders.order_qty) FROM Customers
+	left JOIN Orders ON Customers.cust_id=orders.cust_id
+	 group by Customers.cust_name having max(orders.order_qty)=(select max(orders.order_qty) from orders);
 
+#### Seggregate the order by gender and get the total order quantity
+	SELECT Customers.cust_gender, Sum(Orders.order_qty) 
+	FROM Customers
+	left JOIN Orders ON Customers.cust_id=orders.cust_id
+	Group by Customers.cust_gender;
+#### see combinations of 2 columns
+	select * from orders join customers on orders.cust_id=customers.cust_id;  OR select * from customers join orders on    customers.cust_id=orders.cust_id;
